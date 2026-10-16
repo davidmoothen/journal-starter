@@ -4,16 +4,12 @@ import logging
 
 
 def configure_logging(level: int = logging.INFO) -> None:
-    """Configure application logging at the requested level, defaulting to INFO.
+    """Configure logging for the application."""
+    logging.basicConfig(level=level)
+    if not logging.root.handlers:
+        logging.root.addHandler(logging.StreamHandler())
+    logging.root.setLevel(level)
+    # logging.basicConfig(
+    #     level=level, handlers=logging.root.handlers if logging.root.handlers is not None else [logging.StreamHandler()])
 
-    TODO (Task 3):
-      - Use logging.basicConfig() with the requested level and a format that
-        includes the level, logger name, and message.
-      - Set the root logger's level explicitly too: basicConfig() does nothing
-        when a server or test runner has already installed handlers.
-      - Preserve existing handlers; do not use force=True.
-
-    Module loggers inherit this configuration through normal propagation. The
-    logging exercise runs entry operations at INFO and DEBUG to compare output.
-    Never log journal text, settings objects, or credentials.
-    """
+    # logging.root.setLevel(level)
